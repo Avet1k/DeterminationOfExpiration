@@ -58,12 +58,7 @@ class Shop
         var expiredStews = _stews.Where(stew => stew.ProductionYear + stew.BestBeforeDate < currentYear)
             .ToList();
 
-        ShowInfo(expiredStews);
-    }
-
-    private void ShowInfo(List<Stew> stews)
-    {
-        foreach (Stew stew in stews)
+        foreach (Stew stew in expiredStews)
             stew.ShowInfo();
     }
 
