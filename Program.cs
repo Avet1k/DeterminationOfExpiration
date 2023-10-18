@@ -15,6 +15,10 @@ class Program
 
         Shop shop = new Shop(stews);
         
+        Console.WriteLine("Список всей тушёнки:\n");
+        shop.ShowInfo();
+        
+        Console.WriteLine("\nСписок просроченной тушёнки:\n");
         shop.ShowExpiredStews();
     }
 }
@@ -51,9 +55,21 @@ class Shop
     {
         int currentYear = DateTime.Now.Year;
         
-        var expiredStews = _stews.Where(stew => stew.ProductionYear + stew.BestBeforeDate > currentYear);
+        var expiredStews = _stews.Where(stew => stew.ProductionYear + stew.BestBeforeDate < currentYear)
+            .ToList();
 
-        foreach (Stew stew in expiredStews)
+        ShowInfo(expiredStews);
+    }
+
+    private void ShowInfo(List<Stew> stews)
+    {
+        foreach (Stew stew in stews)
+            stew.ShowInfo();
+    }
+
+    public void ShowInfo()
+    {
+        foreach (Stew stew in _stews)
             stew.ShowInfo();
     }
 }
